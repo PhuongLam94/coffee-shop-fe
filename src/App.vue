@@ -25,6 +25,7 @@ export default {
     logout(){
       localStorage.removeItem('access_token')
       delete Axios.defaults.headers.Authorization
+      this.loggedIn = false
       this.$router.push('/login')
     }
   },

@@ -8,14 +8,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
 import Axios from 'axios'
-import serverInfo from './data/server-info'
 import store from './data/store'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
-
-Axios.defaults.baseURL = `${serverInfo.HTTP_METHOD}://${serverInfo.BASE_URL}:${serverInfo.PORT}`
+Axios.defaults.baseURL = `${process.env.VUE_APP_HTTP_METHOD}://${process.env.VUE_APP_BASE_URL}:${process.env.VUE_APP_PORT}`
 Vue.prototype.$http = Axios
 const accessToken = localStorage.getItem("access_token")
 

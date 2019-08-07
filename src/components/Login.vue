@@ -47,6 +47,10 @@
         errMsg: ''
       }
     },
+    created(){
+      if (localStorage.getItem('access_token'))
+        this.$router.push('/drinks')
+    },
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
@@ -55,7 +59,7 @@
               localStorage.setItem('access_token', response.data.token)
             }
             axios.defaults.headers.common['Authorization'] = `bearer ${localStorage.getItem('access_token')}`
-            this.$router.push('/drinks')
+            this.$router.go('/drinks')
         }).catch(err => {
             this.showErr = true
             this.errMsg = err.response.data.message
