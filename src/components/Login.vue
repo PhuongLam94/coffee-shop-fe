@@ -58,6 +58,7 @@
             if (response.data.token){
               localStorage.setItem('access_token', response.data.token)
               localStorage.setItem('role', response.data.role)
+              localStorage.setItem('name', response.data.employeeName)
             }
             axios.defaults.headers.common['Authorization'] = `bearer ${localStorage.getItem('access_token')}`
             this.$router.go('/drinks')

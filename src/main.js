@@ -3,6 +3,8 @@ import App from './App.vue'
 import Drinks from './components/Drinks'
 import Login from './components/Login'
 import Orders from './components/Orders'
+import CreateEmployee from './components/CreateEmployee'
+import AddEmpWorkingTime from './components/AddEmpWorkingTime'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -23,7 +25,9 @@ if (accessToken){
 const routes = [
   {path: '/login', component: Login},
   {path: '/drinks', component: Drinks},
-  {path: '/orders', component: Orders}
+  {path: '/orders', component: Orders},
+  {path: '/create-employee', component: CreateEmployee},
+  {path: '/add-working-time', component: AddEmpWorkingTime},
 ]
 
 const router = new VueRouter({routes})

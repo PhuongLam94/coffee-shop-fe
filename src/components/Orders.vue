@@ -21,7 +21,10 @@
                         <div
                             v-for="item in order.items"
                             :key="item['_id']"
-                        >{{item.name}}: {{item.quantity}}</div>
+                        >{{item.name}}: {{item.quantity}} 
+                        <span v-if="item.note">({{item.note}})</span>
+                        
+                        </div>
                         <b-button variant="primary" v-if="!order.isCompleted" @click="markAsCompleted(order)">Đã xong</b-button>
                         </b-card-body>
                 </b-collapse>
