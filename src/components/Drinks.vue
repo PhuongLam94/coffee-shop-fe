@@ -91,7 +91,7 @@ export default {
     },
     cancelOrder() {
       this.isCreatingOrder = false;
-      Object.entries(this.drinksByType).forEach(([type, drinks]) => {
+      Object.entries(this.drinksByType).forEach(([, drinks]) => {
         drinks.forEach(drink => {
           drink.quantity = 0
         })
@@ -100,7 +100,7 @@ export default {
     },
     submitOrder() {
       var drinksToOrder = []
-      Object.entries(this.drinksByType).forEach(([type,drinks]) => drinks.forEach(
+      Object.entries(this.drinksByType).forEach(([,drinks]) => drinks.forEach(
         drink => {
           if (drink.quantity > 0){
             drinksToOrder.push(drink)

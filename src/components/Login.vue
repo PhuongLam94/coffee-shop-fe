@@ -57,6 +57,7 @@
         axios.post('/auth', this.form).then(response => {
             if (response.data.token){
               localStorage.setItem('access_token', response.data.token)
+              localStorage.setItem('role', response.data.role)
             }
             axios.defaults.headers.common['Authorization'] = `bearer ${localStorage.getItem('access_token')}`
             this.$router.go('/drinks')

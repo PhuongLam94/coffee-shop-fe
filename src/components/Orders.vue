@@ -1,11 +1,15 @@
 <template>
   <div>
-    <div style="font-size:50px">{{totalIncome.toLocaleString({currency: 'VND'})}}</div>
+    <b-form-group>
+        <b-form-radio v-model="viewBy" name="viewByModes" value="date">Xem theo ngày</b-form-radio>
+        <b-form-radio v-model="viewBy" name="viewByModes" value="items">Xem theo món</b-form-radio>
+    </b-form-group>
+    <div style="font-size:50px">{{totalIncome.toLocaleString('VND')}}</div>
     <b-button variant="success" @click="getOrders()">Refresh</b-button>
-    <b-card-group v-if="ordersByDate">
+    <b-card-group v-if="viewBy === 'date'">
       <b-card v-for="(orders, date) in ordersByDate" :key="date">
         <b-card-header v-b-toggle="date">
-        {{orders.createdDate}} | {{orders.totalAmount.toLocaleString({currency: 'VND'})}} | {{orders.totalOrders}} đơn
+        {{orders.createdDate}} | {{orders.totalAmount.toLocaleString('VND')}} | {{orders.totalOrders}} đơn
         </b-card-header>
         <b-collapse :id="date" :visible="!orders.allCompleted">
           <b-card-body>
@@ -28,6 +32,11 @@
         
       </b-card>
     </b-card-group>
+    <b-list-group v-if="viewBy === 'items'">
+      <b-list-group-item v-for="(orderInfo, item) in ordersByItem" :key="item">
+          {{item}}: {{orderInfo.quantity}} | {{orderInfo.totalAmount.toLocaleString('VND')}}
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 
@@ -39,8 +48,9 @@ export default {
     return {
       orders: null,
       totalIncome: 0,
-      ordersByDate: new Map(),
-      ordersByItem: new Map()
+      ordersByDate: null,
+      ordersByItem: null,
+      viewBy: "date"
     };
   },
   mounted() {
@@ -62,7 +72,7 @@ export default {
       orders.forEach(order => {
         order.createdDate = new Date(order.createdDate);
         this.totalIncome += order.amount;
-        var orderDate =
+        var orderDate ='a'+
           order.createdDate.getDate() +
           "" +
           order.createdDate.getMonth() +
@@ -82,17 +92,23 @@ export default {
             allCompleted: order.isCompleted,
           };
         }
-        if (order.items)
+
+         if (order.items)
           order.items.forEach(item => {
-            if (item.name && ordersByItem[item.name])
-              ordersByItem[item.name] += item.quantity;
+            if (item.name && ordersByItem[item.name]){
+              ordersByItem[item.name].quantity += item.quantity;
+              ordersByItem[item.name].totalAmount += item.quantity*item.price;
+            }
             else {
-              ordersByItem[item.name] = item.quantity;
+              ordersByItem[item.name] = {
+                quantity: item.quantity,
+                totalAmount: item.quantity*item.price
+              }
             }
           });
       });
-      this.ordersByDate = Object.assign({}, ordersByDate);
-      this.ordersByItem = Object.assign({}, ordersByItem);
+      this.ordersByDate = {...ordersByDate}
+      this.ordersByItem = {...ordersByItem}
     });
     }
   }

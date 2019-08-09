@@ -18,7 +18,8 @@ export default {
   name: 'app',
   data: function(){
     return {
-      loggedIn: localStorage.getItem('access_token')
+      loggedIn: localStorage.getItem('access_token'),
+      role: localStorage.getItem('role')
     }
   },
   methods: {

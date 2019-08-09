@@ -13,7 +13,7 @@ import store from './data/store'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
-Axios.defaults.baseURL = `${process.env.VUE_APP_HTTP_METHOD}://${process.env.VUE_APP_BASE_URL}:${process.env.VUE_APP_PORT}`
+Axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 Vue.prototype.$http = Axios
 const accessToken = localStorage.getItem("access_token")
 
