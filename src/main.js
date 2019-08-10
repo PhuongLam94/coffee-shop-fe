@@ -5,6 +5,7 @@ import Login from './components/Login'
 import Orders from './components/Orders'
 import CreateEmployee from './components/CreateEmployee'
 import AddEmpWorkingTime from './components/AddEmpWorkingTime'
+import ChangePass from './components/ChangePass'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -28,6 +29,7 @@ const routes = [
   {path: '/orders', component: Orders},
   {path: '/create-employee', component: CreateEmployee},
   {path: '/add-working-time', component: AddEmpWorkingTime},
+  {path: '/change-pass', component: ChangePass},
 ]
 
 const router = new VueRouter({routes})

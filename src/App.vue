@@ -14,11 +14,13 @@
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Cá nhân">
           <b-dropdown-item @click="$router.push('/add-working-time')">Nhập giờ làm</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/change-pass')">Đổi password</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item @click="logout">Đăng xuất</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <div v-if="name" id="hello-div">Xin chào, <strong>{{name}}</strong>!</div>
     <nav v-if="!loggedIn">
       <b-button @click="$router.push('/login')">Đăng nhập</b-button>
     </nav>
@@ -54,11 +56,14 @@ export default {
 
 <style>
 #app {
-  text-align: center;
+  margin: 3px;
   color: #2c3e50;
-  margin-top: 60px;
+  text-align: center;
 }
 .btn {
   margin: 2px;
+}
+#hello-div{
+  text-align: right
 }
 </style>
