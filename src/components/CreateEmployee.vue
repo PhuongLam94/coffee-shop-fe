@@ -65,9 +65,9 @@ export default {
         .then(response => {
          showSuccessAlert(response)
           this.form = {...this.initForm};
-        store.commit('setLoading', false)
 
-        }, showErrorAlert);
+        }, showErrorAlert).finally(
+        store.commit('setLoading', false));
     }
   }
 };

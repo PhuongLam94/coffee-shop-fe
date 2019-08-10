@@ -59,14 +59,15 @@
 
         axios.post('/auth', this.form).then(response => {
           showSuccessAlert(response)
-        store.commit('setLoading', false)
           store.commit('setUser',{
             token: response.data.token,
             role: response.data.role,
-            name: response.data.employeeName
+            name: response.data.employeeName,
+            username: this.form.username
         })
         this.$router.go('/drinks')
-        }, showErrorAlert)
+        }, showErrorAlert).finally(
+        store.commit('setLoading', false))
       }
     }
   }

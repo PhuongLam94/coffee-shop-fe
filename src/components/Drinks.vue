@@ -116,9 +116,9 @@ export default {
         })
         .then(response => {
           showSuccessAlert(response)
-        store.commit('setLoading', false)
           this.cancelOrder()
-        }, showErrorAlert);
+        }, showErrorAlert).finally(
+        store.commit('setLoading', false));
     }
   }
 };

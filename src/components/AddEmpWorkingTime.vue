@@ -50,9 +50,9 @@ export default {
         store.commit('setLoading', true)
       axios.put("/employees/working-time", requestBody).then(response => {
         showSuccessAlert(response);
-        store.commit('setLoading', false)
         this.form = {...this.initForm};
-      }, showErrorAlert);
+      }, showErrorAlert).finally(
+        store.commit('setLoading', false));
     }
   }
 };

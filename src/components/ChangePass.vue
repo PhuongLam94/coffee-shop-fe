@@ -43,11 +43,11 @@ export default {
             }
             axios.put('/users/change-password', requestBody).then(response =>
             {
-                store.commit('setLoading', false)
                 showSuccessAlert(response)
                 this.form = {...this.initForm}
             }, showErrorAlert
-            )
+            ).finally(
+                store.commit('setLoading', false))
         }
     }
 }
