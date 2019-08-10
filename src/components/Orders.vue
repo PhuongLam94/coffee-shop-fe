@@ -31,7 +31,7 @@
                     >Đã xong</b-button>
                     <b-button
                       variant="danger"
-                      v-if="hasPerToDel(order, orders.orders)"
+                      v-if="hasPerToDel(order)"
                       @click="delOrd(order)"
                     >Xoá đơn</b-button>
                   </b-card-body>
@@ -76,7 +76,7 @@ export default {
         order.createdBy === store.state.user.username
       );
     },
-    delOrd(order, orders) {
+    delOrd(order) {
       store.commit("setLoading", true);
       axios
         .delete("/orders/" + order["_id"])

@@ -21,7 +21,7 @@
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Nhân viên" v-if="user.role === 'admin'">
           <b-dropdown-item @click="$router.push('/create-employee')">Tạo nhân viên</b-dropdown-item>
-          <b-dropdown-item @click="$router.push('/drinks')">Danh sách nhân viên</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/employee-list')">Danh sách nhân viên</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Tài chính">
           <b-dropdown-item @click="$router.push('/create-expense')">Tạo thu nhập/chi phí</b-dropdown-item>
