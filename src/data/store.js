@@ -10,7 +10,7 @@ const store = new Vuex.Store({
             variant: "success"
           },
         user: JSON.parse(localStorage.getItem('user')) || null,
-        
+        loading: false
     },
     mutations: {
         setAlert: (state, newAlert) => {
@@ -23,6 +23,9 @@ const store = new Vuex.Store({
         clearUser: (state) => {
             state.user = null
             localStorage.removeItem('user')
+        },
+        setLoading: (state, loading) => {
+            state.loading = loading
         }
     }
   })

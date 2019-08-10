@@ -46,6 +46,7 @@
 <script>
 import axios from "axios";
 import {showSuccessAlert, showErrorAlert} from '../helpers/helpers'
+import store from '../data/store'
 export default {
   name: "orders",
   data: function() {
@@ -62,13 +63,19 @@ export default {
   },
   methods: {
     markAsCompleted(order){
+        store.commit('setLoading', true)
+
       axios.put(`/orders/${order['_id']}/complete`).then( response => {
+        store.commit('setLoading', false)
+        
         showSuccessAlert(response)
         order.isCompleted = true
       }, showErrorAlert)
     },
     getOrders(){
       this.totalIncome = 0
+        store.commit('setLoading', true)
+
       axios.get("/orders").then(response => {
       var orders = response.data;
       var ordersByDate = new Map();
@@ -114,6 +121,8 @@ export default {
       });
       this.ordersByDate = {...ordersByDate}
       this.ordersByItem = {...ordersByItem}
+        store.commit('setLoading', false)
+
     });
     }
   }

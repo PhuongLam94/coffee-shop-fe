@@ -50,6 +50,7 @@
 <script>
 import axios from "axios"
 import {showSuccessAlert, showErrorAlert} from '../helpers/helpers'
+import store from '../data/store'
 export default {
   name: "app",
   data() {
@@ -65,6 +66,8 @@ export default {
     };
   },
   mounted() {
+        store.commit('setLoading', true)
+
     axios.get(`/drinks`).then(response => {
       var drinks = response.data;
       var drinksByType = new Map();
@@ -78,6 +81,8 @@ export default {
         }
       });
       this.drinksByType = Object.assign({}, drinksByType);
+        store.commit('setLoading', false)
+
     });
   },
   methods: {
@@ -96,6 +101,7 @@ export default {
       this.totalAmount = 0;
     },
     submitOrder() {
+        store.commit('setLoading', true)
       var drinksToOrder = [];
       Object.entries(this.drinksByType).forEach(([, drinks]) =>
         drinks.forEach(drink => {
@@ -104,13 +110,13 @@ export default {
           }
         })
       );
-      axios
-        .post("/orders", {
+      axios.post("/orders", {
           items: drinksToOrder,
           amount: this.totalAmount
         })
         .then(response => {
           showSuccessAlert(response)
+        store.commit('setLoading', false)
           this.cancelOrder()
         }, showErrorAlert);
     }

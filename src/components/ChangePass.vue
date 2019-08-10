@@ -17,6 +17,7 @@
 <script>
 import axios from 'axios'
 import {showSuccessAlert, showErrorAlert} from '../helpers/helpers'
+import store from '../data/store'
 
 export default {
     data: function(){
@@ -35,12 +36,14 @@ export default {
     methods: {
         submit(evt){
             evt.preventDefault()
+            store.commit('setLoading', true)
             var requestBody = {
                 oldPass: this.form.oldPass,
                 newPass: this.form.newPass1
             }
             axios.put('/users/change-password', requestBody).then(response =>
             {
+                store.commit('setLoading', false)
                 showSuccessAlert(response)
                 this.form = {...this.initForm}
             }, showErrorAlert

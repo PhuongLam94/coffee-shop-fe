@@ -31,6 +31,7 @@
 </template>
 <script>
 import axios from "axios";
+import store from '../data/store'
 import {format} from "date-fns"
 import { showSuccessAlert, showErrorAlert } from "../helpers/helpers";
 export default {
@@ -58,11 +59,14 @@ export default {
       var form = {...this.form};
       form.startDate = new Date(form.startDate).getTime();
       if (form.dob) form.dob = new Date(form.dob).getTime();
-      axios
-        .post("/employees", form)
+        store.commit('setLoading', true)
+
+      axios.post("/employees", form)
         .then(response => {
          showSuccessAlert(response)
           this.form = {...this.initForm};
+        store.commit('setLoading', false)
+
         }, showErrorAlert);
     }
   }

@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div id="overlay" v-if="loading" class="d-flex justify-content-center align-items-center">
+        <b-spinner label="loading"></b-spinner>
+    </div>
     <b-alert
       :variant="alert.variant"
       show="3"
@@ -50,6 +53,9 @@ export default {
     },
     user: function(){
       return store.state.user
+    },
+    loading: function(){
+      return store.state.loading
     }
   },
   methods: {
@@ -88,5 +94,18 @@ label{
   top: 0;
   width: 100%;
   z-index: 2
+}
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
 }
 </style>

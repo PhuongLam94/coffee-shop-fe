@@ -20,7 +20,7 @@
 import axios from "axios";
 import { format } from "date-fns";
 import { showSuccessAlert, showErrorAlert } from "../helpers/helpers";
-
+import store from '../data/store'
 export default {
   data: function() {
     return {
@@ -32,7 +32,7 @@ export default {
       form: null
     };
   },
-  mounted(){
+  beforeMount(){
     this.form = {...this.initForm}
   },
   methods: {
@@ -47,8 +47,10 @@ export default {
           }
         ]
       };
+        store.commit('setLoading', true)
       axios.put("/employees/working-time", requestBody).then(response => {
         showSuccessAlert(response);
+        store.commit('setLoading', false)
         this.form = {...this.initForm};
       }, showErrorAlert);
     }

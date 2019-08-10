@@ -55,8 +55,11 @@
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
+        store.commit('setLoading', true)
+
         axios.post('/auth', this.form).then(response => {
           showSuccessAlert(response)
+        store.commit('setLoading', false)
           store.commit('setUser',{
             token: response.data.token,
             role: response.data.role,
