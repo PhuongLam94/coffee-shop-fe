@@ -8,9 +8,12 @@
           <b-dropdown-item @click="$router.push('/drinks')">Tạo đơn</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/orders')">Danh sách đơn</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item-dropdown text="Nhân viên">
+        <b-nav-item-dropdown text="Nhân viên" v-if="role === 'admin'">
           <b-dropdown-item @click="$router.push('/create-employee')">Tạo nhân viên</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/drinks')">Danh sách nhân viên</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="Tài chính">
+          <b-dropdown-item @click="$router.push('/create-expense')">Tạo thu nhập/chi phí</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Cá nhân">
           <b-dropdown-item @click="$router.push('/add-working-time')">Nhập giờ làm</b-dropdown-item>
@@ -59,6 +62,9 @@ export default {
   margin: 3px;
   color: #2c3e50;
   text-align: center;
+}
+label{
+  text-align: left
 }
 .btn {
   margin: 2px;

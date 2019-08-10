@@ -25,11 +25,12 @@
 </template>
 <script>
 import axios from 'axios'
+import {format} from 'date-fns'
 export default {
     data: function(){
         return {
             form: {
-                date: '',
+                date: format(new Date(), 'YYYY-MM-DD'),
                 in:{ hour: 6,min: 30},
                 out: {hour: 11,min: 0}
             },
@@ -59,7 +60,7 @@ export default {
             variant: "success"
           };
           this.form = {
-             date: '',
+             date: format(new Date(), 'YYYY-MM-DD'),
                 in:{ hour: 6,min: 30},
                 out: {hour: 11,min: 0}
           };

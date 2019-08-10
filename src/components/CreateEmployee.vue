@@ -38,6 +38,7 @@
 </template>
 <script>
 import axios from "axios";
+import {format} from "date-fns"
 export default {
   data: function() {
     return {
@@ -45,7 +46,7 @@ export default {
         name: "",
         idCard: "",
         phoneNumber: "",
-        startDate: "",
+        startDate: format(new Date(), 'YYYY-MM-DD'),
         username: "",
         password: "",
         dob: null,
@@ -76,7 +77,7 @@ export default {
             name: "",
             idCard: "",
             phoneNumber: "",
-            startDate: "",
+            startDate: format(new Date(), 'YYYY-MM-DD'),
             username: "",
             password: "",
             dob: null,
