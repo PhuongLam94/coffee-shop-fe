@@ -1,12 +1,5 @@
 <template>
   <div>
-      <b-alert
-      :variant="alert.variant"
-      :show="3"
-      v-if="alert.show"
-      dismissible
-      @dismissed="alert.show=false"
-    >{{alert.msg}}</b-alert>
     <b-form @submit="submit">
       <b-form-group id="date-group" label="Ngày" label-for="date">
         <b-form-input id="date" type="date" v-model="form.date" required></b-form-input>
@@ -24,57 +17,42 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-import {format} from 'date-fns'
+import axios from "axios";
+import { format } from "date-fns";
+import { showSuccessAlert, showErrorAlert } from "../helpers/helpers";
+
 export default {
-    data: function(){
-        return {
-            form: {
-                date: format(new Date(), 'YYYY-MM-DD'),
-                in:{ hour: 6,min: 30},
-                out: {hour: 11,min: 0}
-            },
-      alert: {
-        show: false,
-        msg: "",
-        variant: "success"
-      }
-        }
-    },
-    methods: {
-        submit(evt){
-            evt.preventDefault()
-            var requestBody = {
-                date: this.form.date,
-                slots: [
-                    {
-                        'in': this.form.in,
-                        'out': this.form.out
-                    }
-                ]
-            }
-            axios.put('/employees/working-time', requestBody) .then(response => {
-          this.alert = {
-            show: true,
-            msg: response.data.message,
-            variant: "success"
-          };
-          this.form = {
-             date: format(new Date(), 'YYYY-MM-DD'),
-                in:{ hour: 6,min: 30},
-                out: {hour: 11,min: 0}
-          };
-        })
-        .catch(
-          err =>
-            (this.alert = {
-              show: true,
-              msg: err.response.data.message,
-              variant: "danger"
-            })
-        );
-        }
+  data: function() {
+    return {
+      initForm: {
+        date: format(new Date(), "YYYY-MM-DD"),
+        in: { hour: 7, min: 30 },
+        out: { hour: 11, min: 0 }
+      },
+      form: null
+    };
+  },
+  mounted(){
+    this.form = {...this.initForm}
+  },
+  methods: {
+    submit(evt) {
+      evt.preventDefault();
+      var requestBody = {
+        date: this.form.date,
+        slots: [
+          {
+            in: this.form.in,
+            out: this.form.out
+          }
+        ]
+      };
+      axios.put("/employees/working-time", requestBody).then(response => {
+        showSuccessAlert(response);
+        this.form = {...this.initForm};
+      }, showErrorAlert);
     }
-}
+  }
+};
 </script>
 

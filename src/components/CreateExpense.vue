@@ -1,12 +1,5 @@
 <template>
   <div>
-    <b-alert
-      :variant="alert.variant"
-      :show="3"
-      v-if="alert.show"
-      dismissible
-      @dismissed="alert.show=false"
-    >{{alert.msg}}</b-alert>
     <b-form @submit="submit">
       <b-form-group id="amount-group" label="Số tiền:" label-for="amount">
         <b-form-input id="amount" v-model="form.amount" type="number" required></b-form-input>
@@ -26,21 +19,18 @@
 </template>
 <script>
 import axios from "axios";
+import { showSuccessAlert, showErrorAlert } from "../helpers/helpers";
 import {format} from 'date-fns'
 export default {
   data: function() {
     return {
-      form: {
+      initForm: {
         amount: 0,
         description: '',
         type: 'in',
         date: format(new Date(), 'YYYY-MM-DD')
       },
-      alert: {
-        show: false,
-        msg: "",
-        variant: "success"
-      },
+      form: null,
       typeOptions: [
           {
               text: 'Thu nhập',
@@ -53,6 +43,9 @@ export default {
       ]
     };
   },
+  mounted(){
+    this.form = {...this.initForm}
+  },
   methods: {
     submit(evt) {
       evt.preventDefault()
@@ -61,26 +54,9 @@ export default {
       axios
         .post("/expenses", form)
         .then(response => {
-          this.alert = {
-            show: true,
-            msg: response.data.message,
-            variant: "success"
-          };
-          this.form = {
-            amount: 0,
-        description: '',
-        type: 'in',
-        date: format(new Date(), 'YYYY-MM-DD')
-          };
-        })
-        .catch(
-          err =>
-            (this.alert = {
-              show: true,
-              msg: err.response.data.message,
-              variant: "danger"
-            })
-        );
+            showSuccessAlert(response)
+            this.form = {...this.initForm}
+          }, showErrorAlert)
     }
   }
 };

@@ -18,11 +18,8 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
-Vue.prototype.$http = Axios
-const accessToken = localStorage.getItem("access_token")
-
-if (accessToken){
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = `bearer ${accessToken}`
+if (store.state.user){
+  Axios.defaults.headers.common['Authorization'] = `bearer ${store.state.user.token}`
 }
 const routes = [
   {path: '/login', component: Login},

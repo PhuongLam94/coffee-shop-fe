@@ -1,12 +1,5 @@
 <template>
   <div>
-    <b-alert
-      :variant="alert.variant"
-      :show="3"
-      v-if="alert.show"
-      dismissible
-      @dismissed="alert.show=false"
-    >{{alert.msg}}</b-alert>
     <div class="d-flex justify-content-center align-items-center">
       <span
         style="font-size: 50px"
@@ -17,10 +10,10 @@
         <b-button variant="success" style="margin:5px" @click="submitOrder">Tạo đơn</b-button>
       </div>
     </div>
-    <b-card-group>
+    <b-card-group class="scroll-75">
       <b-card v-for="(drinks, type) in drinksByType" :key="type">
         <b-card-header v-b-toggle="type">{{type}}</b-card-header>
-        <b-collapse :id="type" visible="true">
+        <b-collapse :id="type" visible>
           <b-list-group class="d-flex justify-content-center">
             <b-list-group-item
               v-for="drink in drinks"
@@ -55,7 +48,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
+import {showSuccessAlert, showErrorAlert} from '../helpers/helpers'
 export default {
   name: "app",
   data() {
@@ -116,21 +110,16 @@ export default {
           amount: this.totalAmount
         })
         .then(response => {
-          this.alert = {
-            show: true,
-            msg: response.data.message,
-            variant: "success"
-          };
-          this.cancelOrder();
-        })
-        .catch(err => {
-          this.alert = {
-            show: true,
-            msg: err.response.data.message,
-            variant: "danger"
-          };
-        });
+          showSuccessAlert(response)
+          this.cancelOrder()
+        }, showErrorAlert);
     }
   }
 };
 </script>
+<style>
+  .scroll-75 {
+    max-height: 75vh;
+    overflow-y: auto;
+}
+</style>

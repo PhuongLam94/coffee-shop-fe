@@ -16,16 +16,22 @@
 </template>
 <script>
 import axios from 'axios'
+import {showSuccessAlert, showErrorAlert} from '../helpers/helpers'
+
 export default {
     data: function(){
         return {
-            form: {
+            initForm: {
                 oldPass: '',
                 newPass1: '',
                 newPass2: ''
-            }
+            },
+            form: null
         }
     },
+  mounted(){
+    this.form = {...this.initForm}
+  },
     methods: {
         submit(evt){
             evt.preventDefault()
@@ -33,8 +39,11 @@ export default {
                 oldPass: this.form.oldPass,
                 newPass: this.form.newPass1
             }
-            axios.put('/users/change-password', requestBody).then(
-                alert("Change password successfully.")
+            axios.put('/users/change-password', requestBody).then(response =>
+            {
+                showSuccessAlert(response)
+                this.form = {...this.initForm}
+            }, showErrorAlert
             )
         }
     }

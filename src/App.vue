@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="md" type="dark" variant="info" v-if="loggedIn" sticky>
+    <b-alert
+      :variant="alert.variant"
+      show="3"
+      v-if="alert.show"
+      dismissible
+      @dismissed="alert.show=false"
+     id="alert-msg" 
+    >{{alert.message}}</b-alert>
+    <b-navbar toggleable="md" type="dark" variant="info" v-if="user" sticky style="z-index: 1">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -8,7 +16,7 @@
           <b-dropdown-item @click="$router.push('/drinks')">Tạo đơn</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/orders')">Danh sách đơn</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item-dropdown text="Nhân viên" v-if="role === 'admin'">
+        <b-nav-item-dropdown text="Nhân viên" v-if="user.role === 'admin'">
           <b-dropdown-item @click="$router.push('/create-employee')">Tạo nhân viên</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/drinks')">Danh sách nhân viên</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -23,8 +31,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <div v-if="name" id="hello-div">Xin chào, <strong>{{name}}</strong>!</div>
-    <nav v-if="!loggedIn">
+    <nav v-if="!user">
       <b-button @click="$router.push('/login')">Đăng nhập</b-button>
     </nav>
 
@@ -34,25 +41,29 @@
 
 <script>
 import Axios from "axios";
+import store from './data/store'
 export default {
-  name: "app",
-  data: function() {
-    return {
-      loggedIn: localStorage.getItem("access_token"),
-      role: localStorage.getItem("role"),
-      name: localStorage.getItem("name")
-    };
+    name: "app",
+  computed: {
+    alert: function() {
+      return store.state.alert
+    },
+    user: function(){
+      return store.state.user
+    }
   },
   methods: {
     logout() {
-      localStorage.removeItem("access_token");
-      delete Axios.defaults.headers.Authorization;
-      this.loggedIn = false;
+      store.commit('clearUser')
+      delete Axios.defaults.headers.common.Authorization;
       this.$router.push("/login");
     }
   },
-  mounted() {
-    this.loggedIn = localStorage.getItem("access_token");
+  mounted(){
+    if (this.$route === "/login" && store.state.user)
+        this.$router.push('/drinks')
+    if (!store.state.user && this.$route !== "/login")
+        this.$router.push('/login')
   }
 };
 </script>
@@ -71,5 +82,11 @@ label{
 }
 #hello-div{
   text-align: right
+}
+#alert-msg{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2
 }
 </style>

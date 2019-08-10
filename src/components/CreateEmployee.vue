@@ -1,12 +1,5 @@
 <template>
   <div>
-    <b-alert
-      :variant="alert.variant"
-      :show="3"
-      v-if="alert.show"
-      dismissible
-      @dismissed="alert.show=false"
-    >{{alert.msg}}</b-alert>
     <b-form @submit="submit">
       <b-form-group id="name-group" label="Họ và tên" label-for="name">
         <b-form-input id="name" v-model="form.name" required></b-form-input>
@@ -39,10 +32,11 @@
 <script>
 import axios from "axios";
 import {format} from "date-fns"
+import { showSuccessAlert, showErrorAlert } from "../helpers/helpers";
 export default {
   data: function() {
     return {
-      form: {
+      initForm: {
         name: "",
         idCard: "",
         phoneNumber: "",
@@ -52,12 +46,11 @@ export default {
         dob: null,
         email: ""
       },
-      alert: {
-        show: false,
-        msg: "",
-        variant: "success"
-      }
+      form: null
     };
+  },
+  mounted(){
+    this.form = {...this.initForm}
   },
   methods: {
     submit(evt) {
@@ -68,30 +61,9 @@ export default {
       axios
         .post("/employees", form)
         .then(response => {
-          this.alert = {
-            show: true,
-            msg: response.data.message,
-            variant: "success"
-          };
-          this.form = {
-            name: "",
-            idCard: "",
-            phoneNumber: "",
-            startDate: format(new Date(), 'YYYY-MM-DD'),
-            username: "",
-            password: "",
-            dob: null,
-            email: ""
-          };
-        })
-        .catch(
-          err =>
-            (this.alert = {
-              show: true,
-              msg: err.response.data.message,
-              variant: "danger"
-            })
-        );
+         showSuccessAlert(response)
+          this.form = {...this.initForm};
+        }, showErrorAlert);
     }
   }
 };

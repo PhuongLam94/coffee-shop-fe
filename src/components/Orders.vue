@@ -1,12 +1,12 @@
 <template>
   <div>
-    <b-form-group>
-        <b-form-radio v-model="viewBy" name="viewByModes" value="date">Xem theo ngày</b-form-radio>
-        <b-form-radio v-model="viewBy" name="viewByModes" value="items">Xem theo món</b-form-radio>
-    </b-form-group>
+    <div class="d-flex">
+        <b-form-radio class="col-md-6" v-model="viewBy" name="viewByModes" value="date">Xem theo ngày</b-form-radio>
+        <b-form-radio class="col-md-6" v-model="viewBy" name="viewByModes" value="items">Xem theo món</b-form-radio>
+        <b-button variant="success" @click="getOrders()">F5</b-button>
+    </div>
     <div style="font-size:50px">{{totalIncome.toLocaleString('VND')}}</div>
-    <b-button variant="success" @click="getOrders()">Refresh</b-button>
-    <b-card-group v-if="viewBy === 'date'">
+    <b-card-group v-if="viewBy === 'date'" class="scroll-75">
       <b-card v-for="(orders, date) in ordersByDate" :key="date">
         <b-card-header v-b-toggle="date">
         {{orders.createdDate}} | {{orders.totalAmount.toLocaleString('VND')}} | {{orders.totalOrders}} đơn
@@ -35,7 +35,7 @@
         
       </b-card>
     </b-card-group>
-    <b-list-group v-if="viewBy === 'items'">
+    <b-list-group v-if="viewBy === 'items'" class="scroll-75">
       <b-list-group-item v-for="(orderInfo, item) in ordersByItem" :key="item">
           {{item}}: {{orderInfo.quantity}} | {{orderInfo.totalAmount.toLocaleString('VND')}}
       </b-list-group-item>
@@ -45,6 +45,7 @@
 
 <script>
 import axios from "axios";
+import {showSuccessAlert, showErrorAlert} from '../helpers/helpers'
 export default {
   name: "orders",
   data: function() {
@@ -61,9 +62,10 @@ export default {
   },
   methods: {
     markAsCompleted(order){
-      axios.put(`/orders/${order['_id']}/complete`).then(
+      axios.put(`/orders/${order['_id']}/complete`).then( response => {
+        showSuccessAlert(response)
         order.isCompleted = true
-      )
+      }, showErrorAlert)
     },
     getOrders(){
       this.totalIncome = 0

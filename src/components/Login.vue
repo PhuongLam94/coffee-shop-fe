@@ -29,11 +29,12 @@
         <b-button type="submit" variant="primary">Submit</b-button>
         </b-form>
     </div>
-    <b-alert variant="danger" show v-if="showErr">{{errMsg}}</b-alert>
   </div>
 </template>
 
 <script>
+  import { showSuccessAlert, showErrorAlert } from "../helpers/helpers";
+  import store from '../data/store'
   import axios from 'axios'
   export default {
       name:'login',
@@ -48,24 +49,21 @@
       }
     },
     created(){
-      if (localStorage.getItem('access_token'))
+      if (store.state.user)
         this.$router.push('/drinks')
     },
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
         axios.post('/auth', this.form).then(response => {
-            if (response.data.token){
-              localStorage.setItem('access_token', response.data.token)
-              localStorage.setItem('role', response.data.role)
-              localStorage.setItem('name', response.data.employeeName)
-            }
-            axios.defaults.headers.common['Authorization'] = `bearer ${localStorage.getItem('access_token')}`
-            this.$router.go('/drinks')
-        }).catch(err => {
-            this.showErr = true
-            this.errMsg = err.response.data.message
+          showSuccessAlert(response)
+          store.commit('setUser',{
+            token: response.data.token,
+            role: response.data.role,
+            name: response.data.employeeName
         })
+        this.$router.go('/drinks')
+        }, showErrorAlert)
       }
     }
   }
