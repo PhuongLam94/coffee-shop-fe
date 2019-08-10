@@ -33,9 +33,9 @@ export default {
                 oldPass: this.form.oldPass,
                 newPass: this.form.newPass1
             }
-            axios.put('/users/change-password', requestBody).then(response => {
+            axios.put('/users/change-password', requestBody).then(
                 alert("Change password successfully.")
-            })
+            )
         }
     }
 }

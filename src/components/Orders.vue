@@ -61,9 +61,9 @@ export default {
   },
   methods: {
     markAsCompleted(order){
-      axios.put(`/orders/${order['_id']}/complete`).then(response => {
+      axios.put(`/orders/${order['_id']}/complete`).then(
         order.isCompleted = true
-      })
+      )
     },
     getOrders(){
       this.totalIncome = 0
