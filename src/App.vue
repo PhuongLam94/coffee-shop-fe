@@ -15,8 +15,8 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
+          <b-nav-item @click="$router.push('/drinks')">Tạo đơn</b-nav-item>
         <b-nav-item-dropdown text="Đơn hàng">
-          <b-dropdown-item @click="$router.push('/drinks')">Tạo đơn</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/orders')">Danh sách đơn</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Nhân viên" v-if="user.role === 'admin'">
@@ -29,8 +29,8 @@
         <b-nav-item-dropdown text="Cá nhân">
           <b-dropdown-item @click="$router.push('/add-working-time')">Nhập giờ làm</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/change-pass')">Đổi password</b-dropdown-item>
+          <b-dropdown-item @click="logout">Đăng xuấ</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item @click="logout">Đăng xuất</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

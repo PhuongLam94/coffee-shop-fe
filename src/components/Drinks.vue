@@ -13,7 +13,7 @@
     <b-card-group class="scroll-75">
       <b-card v-for="(drinks, type) in drinksByType" :key="type">
         <b-card-header v-b-toggle="type">{{type}}</b-card-header>
-        <b-collapse :id="type" visible>
+        <b-collapse :id="type">
           <b-list-group class="d-flex justify-content-center">
             <b-list-group-item
               v-for="drink in drinks"
