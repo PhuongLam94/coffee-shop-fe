@@ -32,6 +32,14 @@
             <b-col class="text-sm-right"><b>Email: </b></b-col>
             <b-col>{{ row.item.email }}</b-col>
           </b-row>
+          <b-row>
+            <b-col class="text-sm-right"><b>Người tạo: </b></b-col>
+            <b-col>{{ row.item.createdBy }}</b-col>
+          </b-row>
+          <b-row>
+            <b-col class="text-sm-right"><b>Ngày tạo: </b></b-col>
+            <b-col>{{ formatDate(row.item.createdDate) }}</b-col>
+          </b-row>
         </b-card>
       </template>
     </b-table>

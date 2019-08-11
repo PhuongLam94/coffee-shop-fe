@@ -25,9 +25,11 @@
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Tài chính">
           <b-dropdown-item @click="$router.push('/create-expense')">Tạo thu nhập/chi phí</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/expense-list')">Báo cáo</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Kho">
-          <b-dropdown-item @click="$router.push('/create-inventories')"> Tạo nhập/xuất</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/create-inventory')"> Tạo nhập/xuất</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/inventory-list')">Danh sách nhập/xuất</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Cá nhân">
           <b-dropdown-item @click="$router.push('/add-working-time')">Nhập giờ làm</b-dropdown-item>

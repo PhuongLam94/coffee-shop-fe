@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="submit">
+    <b-form @submit="submit" v-if="form">
       <b-form-group id="amount-group" label="Số tiền:" label-for="amount">
         <b-form-input id="amount" v-model="form.amount" type="number" required></b-form-input>
       </b-form-group>
@@ -51,6 +51,7 @@ export default {
       evt.preventDefault()
       var form = {...this.form};
       form.date = new Date(form.date).getTime();
+      form.amount = parseInt(form.amount)
       axios
         .post("/expenses", form)
         .then(response => {
