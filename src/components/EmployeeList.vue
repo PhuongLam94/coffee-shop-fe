@@ -38,7 +38,7 @@
           </b-row>
           <b-row>
             <b-col class="text-sm-right"><b>Ngày tạo: </b></b-col>
-            <b-col>{{ formatDate(row.item.createdDate) }}</b-col>
+            <b-col>{{ formatDate(row.item.createdAt) }}</b-col>
           </b-row>
         </b-card>
       </template>
