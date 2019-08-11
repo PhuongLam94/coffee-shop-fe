@@ -8,6 +8,9 @@ import AddEmpWorkingTime from './components/AddEmpWorkingTime'
 import ChangePass from './components/ChangePass'
 import CreateExpense from './components/CreateExpense'
 import EmployeeList from './components/EmployeeList'
+import CreateInventory from './components/CreateInventory'
+
+
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -31,6 +34,7 @@ const routes = [
   {path: '/change-pass', component: ChangePass},
   {path: '/create-expense', component: CreateExpense},
   {path: '/employee-list', component: EmployeeList},
+  {path: '/create-inventories', component: CreateInventory},
 
 ]
 
