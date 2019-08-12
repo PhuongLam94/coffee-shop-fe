@@ -35,6 +35,7 @@
         <b-nav-item-dropdown text="Cá nhân">
           <b-dropdown-item @click="$router.push('/add-working-time')">Nhập giờ làm</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/change-pass')">Đổi password</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/working-time-report/'+user.username)">Xem giờ làm</b-dropdown-item>
           <b-dropdown-item @click="logout">Đăng xuất</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>

@@ -39,7 +39,7 @@ const routes = [
   {path: '/create-inventory', component: CreateInventory},
   {path: '/inventory-list', component: InventoryList},
   {path: '/expense-list', component: ExpenseList},
-  {path: '/working-time-report', component: EmpWorkingTimeReport},
+  {path: '/working-time-report/:username*', component: EmpWorkingTimeReport},
 
 ]
 

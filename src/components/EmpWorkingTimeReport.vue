@@ -104,13 +104,12 @@ export default {
       evt.preventDefault();
       store.commit("setLoading", true);
       axios
-        .get(`/employees/working-times?fromDate=${new Date(this.filter.fromDate).getTime()}&toDate=${new Date(this.filter.toDate).getTime()}`)
+        .get(`/employees${this.$route.params.username? '/'+this.$route.params.username:''}/working-times?fromDate=${new Date(this.filter.fromDate).getTime()}&toDate=${new Date(this.filter.toDate).getTime()}`)
         .then(response => {
           this.empWorkingTimeInfo = response.data;
         }, showErrorAlert)
         .finally(() => 
           store.commit("setLoading", false)
-        
           );
     }
   },
