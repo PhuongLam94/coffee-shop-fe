@@ -108,9 +108,9 @@ export default {
         .then(response => {
           this.empWorkingTimeInfo = response.data;
         }, showErrorAlert)
-        .finally(() => {() =>
+        .finally(() => 
           store.commit("setLoading", false)
-        }
+        
           );
     }
   },
