@@ -25,6 +25,7 @@ const store = new Vuex.Store({
             localStorage.removeItem('user')
         },
         setLoading: (state, loading) => {
+            console.log('loading', store.state.loading)
             state.loading = loading
         }
     }

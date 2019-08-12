@@ -38,12 +38,16 @@ export default {
   methods: {
     submit(evt) {
       evt.preventDefault();
+      var inTime = new Date(this.form.date)
+      inTime.setHours(this.form.in.hour, this.form.in.min)
+      var outTime = new Date(this.form.date)
+      outTime.setHours(this.form.out.hour, this.form.out.min)
       var requestBody = {
-        date: this.form.date,
+        date: new Date(this.form.date).getTime(),
         slots: [
           {
-            in: this.form.in,
-            out: this.form.out
+            in: inTime.getTime(),
+            out: outTime.getTime()
           }
         ]
       };
@@ -51,7 +55,7 @@ export default {
       axios.put("/employees/working-time", requestBody).then(response => {
         showSuccessAlert(response);
         this.form = {...this.initForm};
-      }, showErrorAlert).finally(
+      }, showErrorAlert).finally(() =>
         store.commit('setLoading', false));
     }
   }

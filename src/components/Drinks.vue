@@ -117,7 +117,7 @@ export default {
         .then(response => {
           showSuccessAlert(response)
           this.cancelOrder()
-        }, showErrorAlert).finally(
+        }, showErrorAlert).finally(() =>
         store.commit('setLoading', false));
     }
   }

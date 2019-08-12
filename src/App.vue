@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="overlay" v-if="loading" class="d-flex justify-content-center align-items-center">
+    <div id="overlay" v-if="loading === true" class="d-flex justify-content-center align-items-center">
         <b-spinner label="loading"></b-spinner>
     </div>
     <b-alert
@@ -22,6 +22,7 @@
         <b-nav-item-dropdown text="Nhân viên" v-if="user.role === 'admin'">
           <b-dropdown-item @click="$router.push('/create-employee')">Tạo nhân viên</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/employee-list')">Danh sách nhân viên</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/working-time-report')">Báo cáo giờ làm nv</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Tài chính">
           <b-dropdown-item @click="$router.push('/create-expense')">Tạo thu nhập/chi phí</b-dropdown-item>
@@ -34,7 +35,7 @@
         <b-nav-item-dropdown text="Cá nhân">
           <b-dropdown-item @click="$router.push('/add-working-time')">Nhập giờ làm</b-dropdown-item>
           <b-dropdown-item @click="$router.push('/change-pass')">Đổi password</b-dropdown-item>
-          <b-dropdown-item @click="logout">Đăng xuấ</b-dropdown-item>
+          <b-dropdown-item @click="logout">Đăng xuất</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -60,6 +61,7 @@ export default {
       return store.state.user
     },
     loading: function(){
+      console.log("loading changed", store.state.loading)
       return store.state.loading
     }
   },

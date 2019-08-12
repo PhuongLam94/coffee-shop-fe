@@ -11,6 +11,7 @@ import EmployeeList from './components/EmployeeList'
 import CreateInventory from './components/CreateInventory'
 import InventoryList from './components/InventoryList'
 import ExpenseList from './components/ExpenseList'
+import EmpWorkingTimeReport from './components/EmpWorkingTimeReport'
 
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -38,6 +39,7 @@ const routes = [
   {path: '/create-inventory', component: CreateInventory},
   {path: '/inventory-list', component: InventoryList},
   {path: '/expense-list', component: ExpenseList},
+  {path: '/working-time-report', component: EmpWorkingTimeReport},
 
 ]
 

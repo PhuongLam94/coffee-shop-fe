@@ -80,7 +80,7 @@ export default {
         });
         this.ingredients = ingredients;
       }, showErrorAlert)
-      .finally(store.commit("setLoading", false));
+      .finally(() => store.commit("setLoading", false));
   },
   methods: {
       ingredientChange(){
@@ -102,7 +102,7 @@ export default {
               showSuccessAlert(response)
               this.form = {...this.initForm}
               this.chosenIngredient._id = null
-          }, showErrorAlert).finally(store.commit("setLoading", false))
+          }, showErrorAlert).finally(() =>store.commit("setLoading", false))
       }
   }
 };

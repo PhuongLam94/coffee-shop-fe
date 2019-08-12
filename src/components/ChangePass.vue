@@ -46,7 +46,7 @@ export default {
                 showSuccessAlert(response)
                 this.form = {...this.initForm}
             }, showErrorAlert
-            ).finally(
+            ).finally(() =>
                 store.commit('setLoading', false))
         }
     }

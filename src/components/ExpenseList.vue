@@ -146,7 +146,7 @@ export default {
         .then(response => {
           this.expenseInfo = response.data;
         }, showErrorAlert)
-        .finally(store.commit("setLoading", false));
+        .finally(() => store.commit("setLoading", false));
     }
   },
   mounted() {}

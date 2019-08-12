@@ -66,7 +66,7 @@
             username: this.form.username
         })
         this.$router.go('/drinks')
-        }, showErrorAlert).finally(
+        }, showErrorAlert).finally(() =>
         store.commit('setLoading', false))
       }
     }

@@ -84,7 +84,7 @@ export default {
           showSuccessAlert(response);
           this.getOrders()
         }, showErrorAlert)
-        .finally(store.commit("setLoading", false));
+        .finally(() => store.commit("setLoading", false));
     },
     markAsCompleted(order) {
       store.commit("setLoading", true);
@@ -148,7 +148,7 @@ export default {
         });
         this.ordersByDate = { ...ordersByDate };
         this.ordersByItem = { ...ordersByItem };
-      }, showErrorAlert).finally(
+      }, showErrorAlert).finally(() =>
         store.commit("setLoading", false))
     }
   }
