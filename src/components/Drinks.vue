@@ -10,7 +10,7 @@
         <b-button variant="success" style="margin:5px" @click="submitOrder">Tạo đơn</b-button>
       </div>
     </div>
-    <b-card-group class="scroll-75">
+    <b-card-group>
       <b-card v-for="(drinks, type) in drinksByType" :key="type">
         <b-card-header v-b-toggle="type">{{type}}</b-card-header>
         <b-collapse :id="type">
