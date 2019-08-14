@@ -1,14 +1,17 @@
 <template>
   <div>
     <div>
-      <b-form @submit="getReport">
+      <b-form @submit="getReportForTimeRange">
         <b-form-group label="Từ ngày" label-for="fromDate">
           <b-form-input class="col-md-6" v-model="filter.fromDate" type="date"></b-form-input>
         </b-form-group>
         <b-form-group label="Tới ngày" label-for="toDate">
           <b-form-input class="col-md-6" v-model="filter.toDate" type="date"></b-form-input>
         </b-form-group>
-        <b-button variant="primary" type="submit">Xem</b-button>
+        <div class="d-flex">
+          <b-button variant="primary" type="submit">Xem</b-button>
+          <b-button variant="success" @click="getReportAllTime()">Xem tất cả</b-button>
+        </div>
       </b-form>
     </div>
     <div v-if="expenseInfo">
@@ -33,9 +36,21 @@
           </b-row>
           <b-row>
             <b-col class="text-sm-right">
+              <b>Nhập hàng:</b>
+            </b-col>
+            <b-col>{{formatMoney(expenseInfo.inInventory)}}</b-col>
+          </b-row>
+          <b-row>
+            <b-col class="text-sm-right">
+              <b>Xuất hàng:</b>
+            </b-col>
+            <b-col>{{formatMoney(expenseInfo.outInventory)}}</b-col>
+          </b-row>
+          <b-row>
+            <b-col class="text-sm-right">
               <b>Lợi nhuận:</b>
             </b-col>
-            <b-col><strong>{{formatMoney(expenseInfo.revenue+expenseInfo.income-expenseInfo.outcome)}}</strong></b-col>
+            <b-col><strong>{{formatMoney(expenseInfo.revenue+expenseInfo.income-expenseInfo.outcome+expenseInfo.outInventory-expenseInfo.inInventory)}}</strong></b-col>
           </b-row>
         </b-card>
         <b-button v-b-toggle="'collapse-1'">Hiện danh sách</b-button>
@@ -84,11 +99,11 @@ export default {
   computed: {
       filter: function(){
           var today = new Date()
-          var fromDate, toDate
+          var fromDate, toDate, year, month
           if (today.getDate() < 10){
               //in previous month circle
-              var year = today.getFullYear()
-              var month = today.getMonth() - 1
+              year = today.getFullYear()
+              month = today.getMonth() - 1
               if (today.getMonth()==0){
                year--
                month = 11
@@ -97,8 +112,8 @@ export default {
               toDate = format(new Date(today.getFullYear(), today.getMonth(), 9), 'YYYY-MM-DD')
           } else {
               //in current month circle
-                var year = today.getFullYear()
-              var month = today.getMonth() + 1
+              year = today.getFullYear()
+              month = today.getMonth() + 1
               if (today.getMonth()==11){
                year++
                month = 0
@@ -138,11 +153,18 @@ export default {
   methods: {
     formatMoney: value => value.toLocaleString('VND'),
     formatDate: value => format(new Date(value), "DD/MM/YYYY"),
-    getReport(evt) {
+    getReportForTimeRange(evt) {
       evt.preventDefault();
+      this.getReport(new Date(this.filter.fromDate).getTime(), new Date(this.filter.toDate).getTime())
+    },
+    getReportAllTime(){
+      this.getReport()
+    },
+    getReport(fromDate, toDate){
       store.commit("setLoading", true);
+      var query = fromDate?`?fromDate=${fromDate}&toDate=${toDate}`:''
       axios
-        .get(`/expenses?fromDate=${new Date(this.filter.fromDate).getTime()}&toDate=${new Date(this.filter.toDate).getTime()}`)
+        .get(`/expenses${query}`)
         .then(response => {
           this.expenseInfo = response.data;
         }, showErrorAlert)
