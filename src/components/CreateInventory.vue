@@ -11,7 +11,7 @@
         <b-form-select id="type" v-model="form.type" :options="typeOptions" required></b-form-select>
       </b-form-group>
       <b-form-group label="Số lượng:" label-for="quantity">
-        <b-form-input id="quantity" @change="quantityChange" v-model="form.quantity" required type="number"></b-form-input>
+        <b-form-input id="quantity" @change="quantityChange" v-model="form.quantity" required type="number" step="0.01"></b-form-input>
       </b-form-group>
       <b-form-group label="Ngày:" label-for="date">
         <b-form-input id="date" v-model="form.date" type="date"></b-form-input>
@@ -98,6 +98,7 @@ export default {
           store.commit("setLoading", true)
           var resquestBody = {...this.form}
           resquestBody.ingredient = this.chosenIngredient
+          resquestBody.date = new Date(resquestBody.date).getTime()
           axios.post('/inventories', resquestBody).then(response => {
               showSuccessAlert(response)
               this.form = {...this.initForm}
