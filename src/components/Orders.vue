@@ -44,9 +44,9 @@
     </b-card-group>
     <b-list-group v-if="viewBy === 'items'" class="scroll-75">
       <b-list-group-item
-        v-for="(orderInfo, item) in ordersByItem"
-        :key="item"
-      >{{item}}: {{orderInfo.quantity}} | {{orderInfo.totalAmount.toLocaleString('VND')}}</b-list-group-item>
+        v-for="(orderInfo) in ordersByItem"
+        :key="orderInfo.name"
+      >{{orderInfo.name}}: {{orderInfo.quantity}} | {{orderInfo.totalAmount.toLocaleString('VND')}}</b-list-group-item>
     </b-list-group>
   </div>
 </template>
@@ -142,6 +142,7 @@ export default {
                   item.quantity * item.price;
               } else {
                 ordersByItem[item.name] = {
+                  name: item.name,
                   quantity: item.quantity,
                   totalAmount: item.quantity * item.price
                 };
@@ -149,7 +150,7 @@ export default {
             });
         });
         this.ordersByDate = { ...ordersByDate };
-        this.ordersByItem = { ...ordersByItem };
+        this.ordersByItem = Object.values(ordersByItem).sort((a, b) => a.totalAmount > b.totalAmount?-1:1);
       }, showErrorAlert).finally(() =>
         store.commit("setLoading", false))
     }

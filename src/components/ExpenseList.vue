@@ -155,7 +155,7 @@ export default {
     formatDate: value => format(new Date(value), "DD/MM/YYYY"),
     getReportForTimeRange(evt) {
       evt.preventDefault();
-      this.getReport(new Date(this.filter.fromDate).getTime(), new Date(this.filter.toDate).getTime())
+      this.getReport(new Date(`${this.filter.fromDate}GMT+7`).getTime(), new Date(`${this.filter.toDate}GMT+7`).getTime())
     },
     getReportAllTime(){
       this.getReport()

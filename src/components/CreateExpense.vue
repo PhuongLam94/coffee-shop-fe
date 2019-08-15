@@ -21,6 +21,7 @@
 import axios from "axios";
 import { showSuccessAlert, showErrorAlert } from "../helpers/helpers";
 import {format} from 'date-fns'
+import store from '../data/store'
 export default {
   data: function() {
     return {
@@ -52,12 +53,15 @@ export default {
       var form = {...this.form};
       form.date = new Date(form.date).getTime();
       form.amount = parseInt(form.amount)
+      store.commit('setLoading', true)
       axios
         .post("/expenses", form)
         .then(response => {
             showSuccessAlert(response)
             this.form = {...this.initForm}
-          }, showErrorAlert)
+          }, showErrorAlert).finally(() => {
+              store.commit('setLoading', false)
+          })
     }
   }
 };
