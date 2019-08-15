@@ -10,7 +10,7 @@
       <b-card v-for="(orders, date) in ordersByDate" :key="date">
         <b-card-header
           v-b-toggle="date"
-        >{{orders.createdDate}} | {{orders.totalAmount.toLocaleString('VND')}} | {{orders.totalOrders}} đơn</b-card-header>
+        >{{orders.createdDate}} | {{orders.totalAmount.toLocaleString('VND')}} | {{orders.totalItems}} ly</b-card-header>
         <b-collapse :id="date" :visible="!orders.allCompleted">
           <b-card-body>
             <b-card-group>
@@ -107,6 +107,8 @@ export default {
         var ordersByItem = new Map();
         orders.sort((a, b) => (a.createdDate > b.createdDate ? -1 : 1));
         orders.forEach(order => {
+          var orderItems = 0
+          order.items.forEach(item => orderItems+=item.quantity)
           order.createdDate = new Date(order.createdDate);
           this.totalIncome += order.amount;
           var orderDate =
@@ -119,7 +121,7 @@ export default {
           if (ordersByDate[orderDate]) {
             ordersByDate[orderDate]["orders"].push(order);
             ordersByDate[orderDate]["totalAmount"] += order.amount;
-            ordersByDate[orderDate]["totalOrders"]++;
+            ordersByDate[orderDate]["totalItems"]+= orderItems;
             ordersByDate[orderDate]["allCompleted"] =
               ordersByDate[orderDate]["allCompleted"] && order.isCompleted;
           } else {
@@ -127,7 +129,7 @@ export default {
               createdDate: order.createdDate.toLocaleDateString("vi-VI"),
               orders: [order],
               totalAmount: order.amount,
-              totalOrders: 1,
+              totalItems: orderItems,
               allCompleted: order.isCompleted
             };
           }
