@@ -98,6 +98,8 @@ export default {
           var resquestBody = {...this.form}
           resquestBody.ingredient = this.chosenIngredient
           resquestBody.date = new Date(resquestBody.date).getTime()
+          resquestBody.quantity = parseFloat(resquestBody.quantity)
+          resquestBody.price = parseInt(resquestBody.price)
           axios.post('/inventories', resquestBody).then(response => {
               showSuccessAlert(response)
               this.form = {...this.initForm}
