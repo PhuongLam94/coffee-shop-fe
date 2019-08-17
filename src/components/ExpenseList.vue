@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      <b-button variant="success" @click="getReportAllTime()">Xem tất cả</b-button>
       <b-form @submit="getReportForTimeRange">
         <b-form-group label="Từ ngày" label-for="fromDate">
           <b-form-input class="col-md-6" v-model="filter.fromDate" type="date"></b-form-input>
@@ -8,10 +9,7 @@
         <b-form-group label="Tới ngày" label-for="toDate">
           <b-form-input class="col-md-6" v-model="filter.toDate" type="date"></b-form-input>
         </b-form-group>
-        <div class="d-flex">
-          <b-button variant="primary" type="submit">Xem</b-button>
-          <b-button variant="success" @click="getReportAllTime()">Xem tất cả</b-button>
-        </div>
+        <b-button variant="primary" type="submit">Xem</b-button>
       </b-form>
     </div>
     <div v-if="expenseInfo">
@@ -134,7 +132,21 @@ export default {
       fields: {
         type: {
           label: "Loại",
-          formatter: value => (value === "in" ? "Thu nhập" : "Chi phí")
+          formatter: value => {
+            switch (value){
+              case 'in':
+                return 'Thu nhập';
+              case 'out':
+                  return 'Chi phí';
+              case 'revenue':
+                  return 'Doanh thu';
+              case 'inInventory':
+                return 'Nhập hàng';
+              case 'outInventory':
+                return 'Xuất hàng'
+
+            }
+            }
         },
         amount: {
           label: "Số tiền",

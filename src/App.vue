@@ -30,7 +30,7 @@
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Kho">
           <b-dropdown-item @click="$router.push('/create-inventory')"> Tạo nhập/xuất</b-dropdown-item>
-          <b-dropdown-item @click="$router.push('/inventory-list')">Danh sách nhập/xuất</b-dropdown-item>
+          <b-dropdown-item @click="$router.push('/inventory-list')">Báo cáo</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Cá nhân">
           <b-dropdown-item @click="$router.push('/add-working-time')">Nhập giờ làm</b-dropdown-item>
@@ -62,7 +62,6 @@ export default {
       return store.state.user
     },
     loading: function(){
-      console.log("loading changed", store.state.loading)
       return store.state.loading
     }
   },
@@ -74,7 +73,7 @@ export default {
     }
   },
   mounted(){
-    if (this.$route === "/login" && store.state.user)
+    if ((this.$route === "/login" || this.$route.path === '/') && store.state.user)
         this.$router.push('/drinks')
     if (!store.state.user && this.$route !== "/login")
         this.$router.push('/login')

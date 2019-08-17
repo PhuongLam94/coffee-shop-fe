@@ -74,7 +74,7 @@ export default {
         },
         amount: {
           label: "Số lượng tồn",
-          formatter: value => Math.round(value*10/3600000)/10
+          formatter: value => Math.round(value*100)/100
         },
         "ingredientInfo.unit.storage": {
           label: "Đơn vị tồn"
@@ -86,14 +86,18 @@ export default {
       inventoryFields: {
           date: {
               label: "Ngày",
-              formatter: value => this.formatDate(value)
+              formatter: value => value?this.formatDate(value):''
           },
           quantity: {
-              label: "Số lượng"
+              label: "Số lượng",
+              formatter: value => Math.round(value*100)/100
           },
           type: {
               label: "Loại",
               formatter: value => value === "in"?"Nhập":"Xuất"
+          },
+          description: {
+            label: 'Mô tả'
           }
       }
     };
