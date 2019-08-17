@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div>
+   <div>
       <b-form @submit="getReport">
         <div class="d-flex">
-        <label for="fromDate">Từ ngày</label>
-          <b-input v-model="filter.fromDate" type="date"></b-input>
+        <label for="fromDate" style="flex-basis: 20%">Từ ngày: </label>
+          <b-input v-model="filter.fromDate" type="date" style="flex-basis: 80%"></b-input>
         </div>
         <div class="d-flex">
-        <label for="toDate">Tới ngày</label>
-          <b-input v-model="filter.toDate" type="date"></b-input>
+        <label for="toDate" style="flex-basis: 20%">Tới ngày:</label>
+          <b-input v-model="filter.toDate" type="date" style="flex-basis: 80%"></b-input>
        </div>
         <b-button variant="primary" type="submit">Xem</b-button>
       </b-form>

@@ -1,20 +1,20 @@
 <template>
   <div>
     <div class="d-flex">
-      <b-form-radio class="col-md-6" v-model="viewBy" name="viewByModes" value="date">Xem theo ngày</b-form-radio>
-      <b-form-radio class="col-md-6" v-model="viewBy" name="viewByModes" value="items">Xem theo món</b-form-radio>
+      <b-form-radio style="flex-basis: 50%" v-model="viewBy" name="viewByModes" value="date">Xem theo ngày</b-form-radio>
+      <b-form-radio  style="flex-basis: 50%" v-model="viewBy" name="viewByModes" value="items">Xem theo món</b-form-radio>
       <b-button variant="success" @click="getOrders()">F5</b-button>
     </div>
     <div style="font-size:50px">{{totalIncome.toLocaleString('VND')}}</div>
-    <b-card-group v-if="viewBy === 'date'" class="scroll-75">
-      <b-card v-for="(orders, date) in ordersByDate" :key="date">
+    <b-card-group class="scroll-75" v-if="viewBy === 'date'">
+    <b-card v-for="(orders, date) in ordersByDate" :key="date" style="flex-basis: 100%">
         <b-card-header
           v-b-toggle="date"
         >{{orders.createdDate}} | {{orders.totalAmount.toLocaleString('VND')}} | {{orders.totalItems}} ly</b-card-header>
         <b-collapse :id="date" :visible="!orders.allCompleted">
           <b-card-body>
             <b-card-group>
-              <b-card v-for="order in orders.orders" :key="order['_id']">
+              <b-card v-for="order in orders.orders" :key="order['_id']" style="flex-basis: 50%">
                 <b-card-header
                   v-b-toggle="order['_id']"
                 >{{order.createdBy}} | {{order.createdDate.toLocaleTimeString('vi-VI')}} | {{order.amount.toLocaleString({currency: 'VND'})}}</b-card-header>

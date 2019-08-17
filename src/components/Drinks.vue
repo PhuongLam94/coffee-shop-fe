@@ -3,7 +3,6 @@
     <div class="d-flex justify-content-center align-items-center">
       <span
         style="font-size: 50px"
-        class="mr-auto col-md-8"
       >{{totalAmount.toLocaleString({currency: 'VND'})}}</span>
       <div v-if="isCreatingOrder" style="margin:5px" class="align-self-right">
         <b-button variant="danger" style="margin:5px" @click="cancelOrder">Huỷ đơn</b-button>
@@ -11,7 +10,7 @@
       </div>
     </div>
     <b-card-group>
-      <b-card v-for="(drinks, type) in drinksByType" :key="type">
+      <b-card v-for="(drinks, type) in drinksByType" :key="type" style="flex-basis: 50%">
         <b-card-header v-b-toggle="type">{{type}}</b-card-header>
         <b-collapse :id="type">
           <b-list-group class="d-flex justify-content-center">
@@ -20,10 +19,10 @@
               :key="drink['_id']"
               class="d-flex justify-content-center flex-column"
             >
-              <div class="p2 d-flex justify-content-center">
+              <div class="d-flex justify-content-center">
                 <b-button class="p-2" @click="changeDrinkQuantity(drink, 1)">+</b-button>
-                <span class="col-md-2 d-flex flex-row">
-                  <div class="col-md-11">
+                <span class="d-flex flex-row" style="flex-basis: 90%">
+                  <div style="flex-basis: 80%">
                     {{drink.name}}
                     <br />
                     {{drink.price.toLocaleString({currency: 'VND'})}}

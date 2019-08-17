@@ -3,12 +3,14 @@
     <div>
       <b-button variant="success" @click="getReportAllTime()">Xem tất cả</b-button>
       <b-form @submit="getReportForTimeRange">
-        <b-form-group label="Từ ngày" label-for="fromDate">
-          <b-form-input class="col-md-6" v-model="filter.fromDate" type="date"></b-form-input>
-        </b-form-group>
-        <b-form-group label="Tới ngày" label-for="toDate">
-          <b-form-input class="col-md-6" v-model="filter.toDate" type="date"></b-form-input>
-        </b-form-group>
+        <div class="d-flex">
+        <label for="fromDate" style="flex-basis: 20%">Từ ngày: </label>
+          <b-input v-model="filter.fromDate" type="date" style="flex-basis: 80%"></b-input>
+        </div>
+        <div class="d-flex">
+        <label for="toDate" style="flex-basis: 20%">Tới ngày:</label>
+          <b-input v-model="filter.toDate" type="date" style="flex-basis: 80%"></b-input>
+       </div>
         <b-button variant="primary" type="submit">Xem</b-button>
       </b-form>
     </div>
@@ -51,9 +53,7 @@
             <b-col><strong>{{formatMoney(expenseInfo.revenue+expenseInfo.income-expenseInfo.outcome+expenseInfo.outInventory-expenseInfo.inInventory)}}</strong></b-col>
           </b-row>
         </b-card>
-        <b-button v-b-toggle="'collapse-1'">Hiện danh sách</b-button>
     </div>
-    <b-collapse id="collapse-1">
     <b-table v-if="expenseInfo" striped hover :items="expenseInfo.expenseList" :fields="fields" responsive="md">
       <template slot="showDetails" slot-scope="row">
         <b-button
@@ -85,7 +85,6 @@
         </b-card>
       </template>
     </b-table>
-    </b-collapse>
   </div>
 </template>
 <script>
