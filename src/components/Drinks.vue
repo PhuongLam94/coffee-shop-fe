@@ -21,7 +21,7 @@
               class="d-flex justify-content-center flex-column"
             >
               <div class="p2 d-flex justify-content-center">
-                <b-button class="p-2" @click="increaseDrinkQuantity(drink)">+</b-button>
+                <b-button class="p-2" @click="changeDrinkQuantity(drink, 1)">+</b-button>
                 <span class="col-md-2 d-flex flex-row">
                   <div class="col-md-11">
                     {{drink.name}}
@@ -32,12 +32,13 @@
                 </span>
                 <b-button
                   class="p-2"
-                  @click="drink.quantity--;totalAmount-=drink.price"
+                  @click="changeDrinkQuantity(drink, -1)"
                   :disabled="drink.quantity<=0"
                 >-</b-button>
               </div>
               <div v-if="drink.quantity>0" class="p-2">
                  <b-form-input v-model="drink.note" placeholder="Nhập ghi chú"></b-form-input>
+                  <b-form-checkbox v-model="drink.isFree" @change="changeDrinkFree(drink)">Miễn phí</b-form-checkbox>                  
               </div>
             </b-list-group-item>
           </b-list-group>
@@ -73,6 +74,7 @@ export default {
       var drinksByType = new Map();
       drinks.forEach(drink => {
         drink.quantity = 0;
+        drink.isFree = false
         drink.note = '';
         if (drinksByType[drink.type]) {
           drinksByType[drink.type].push(drink);
@@ -86,10 +88,18 @@ export default {
     });
   },
   methods: {
-    increaseDrinkQuantity(drink) {
-      drink.quantity++;
-      this.isCreatingOrder = true;
-      this.totalAmount += drink.price;
+    changeDrinkFree(drink){
+        if (drink.isFree)
+          this.totalAmount += drink.price*drink.quantity
+        else
+          this.totalAmount -= drink.price*drink.quantity
+    },
+    changeDrinkQuantity(drink, changeDirection) {
+      drink.quantity += changeDirection;
+      if (changeDirection === 1)
+        this.isCreatingOrder = true;
+      if (!drink.isFree)
+        this.totalAmount += changeDirection*drink.price;
     },
     cancelOrder() {
       this.isCreatingOrder = false;
@@ -106,6 +116,8 @@ export default {
       Object.entries(this.drinksByType).forEach(([, drinks]) =>
         drinks.forEach(drink => {
           if (drink.quantity > 0) {
+            if (drink.isFree)
+              drink.note += ' - miễn phí'
             drinksToOrder.push(drink);
           }
         })
